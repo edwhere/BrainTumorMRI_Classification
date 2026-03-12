@@ -114,7 +114,16 @@ class OutputData:
 
     def save_image(self, class_label: str, pixel_array: np.ndarray, image_file_name: str):
         subdir_img = os.path.join(self.output_dir, "Images", class_label)
-        grayscale_array = pixel_array.astype(np.uint8) if pixel_array.dtype != np.uint8 else pixel_array
+
+        # This is the fix to prevent the 'over-exposed' look in the images ----
+        pmin, pmax = pixel_array.min(), pixel_array.max()
+        if pmax > pmin:
+            normalized = (pixel_array - pmin) / (pmax - pmin) * 255.0
+        else:
+            normalized = np.zeros_like(pixel_array)
+        # ----------------------------------------------------------------------
+
+        grayscale_array = normalized.astype(np.uint8)
         img_grayscale = Image.fromarray(grayscale_array, mode='L')
         img_rgb = img_grayscale.convert('RGB')
         img_file_path = os.path.join(subdir_img, image_file_name)
@@ -160,6 +169,7 @@ def main():
         print("... processing folder:", folder)
         mat_files = source.get_mat_file_paths(folder)
         for mat_file in mat_files:
+            print("    processing mat file:", mat_file)
             prefix_name = os.path.basename(mat_file).split(".")[0]
             metadata["fid"].append(prefix_name)
 
