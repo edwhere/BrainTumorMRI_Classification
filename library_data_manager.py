@@ -18,6 +18,8 @@ from sklearn.model_selection import train_test_split, KFold
 
 import constants as con
 
+pd.set_option('display.max_colwidth', None)
+
 def check_dir_items(root_dir) -> None:
     if not os.path.isdir(root_dir):
         raise NotADirectoryError("Unavailable data source at {}".format(root_dir))
@@ -36,6 +38,15 @@ def check_dir_items(root_dir) -> None:
 
     if not os.path.isfile(meta_file):
         raise FileNotFoundError("Unavailable metadata file at {}".format(meta_file))
+
+def get_id_from_path(path: str) -> str:
+    """Get the image id when the image path is known. If the path is /home/xuser/files/data123.png,
+    then the id is 'data123'."""
+    return os.path.splitext(os.path.basename(path))[0]
+
+def get_ids_from_paths(paths: list[str]) -> list[str]:
+    """Get a list of image id values from a list of path values. """
+    return [get_id_from_path(path) for path in paths]
 
 class MRIDataSource:
     def __init__(self, root_dir):
@@ -82,9 +93,9 @@ class MRIDataSource:
         Args:
             test_percent (int): percentage of data assigned to the test set.
             kvalue (int): The value of K for k-fold cross-validation using all the data not included in the test set.
-            images_per_tumor_type (int): The total number of images per tumor type.
+            images_per_tumor_type (int): The total number of images per tumor type that will be used to create folds.
         Returns:
-            list: A list of K pandas DataFrames, one per fold. Each DataFrame has columns "id", "label",
+            list: A list of K pandas DataFrames, one per fold. Each DataFrame has columns "path", "label",
                 and "subset", where "subset" is 'trn' for train data, 'val' for validation data, and 'tst'
                 for test data. The test data is the same across all folds.
         """
@@ -93,15 +104,15 @@ class MRIDataSource:
             raise ValueError(f"Max. number of images per tumor type is {con.MAX_IMAGES_PER_TUMOR_TYPE}")
 
         # Get the dataset entries for partitions
-        gli_ids = self.get_image_ids("glioma")
-        men_ids = self.get_image_ids("meningioma")
-        pit_ids = self.get_image_ids("pituitary")
+        gli_paths = self.get_image_paths("glioma")
+        men_paths = self.get_image_paths("meningioma")
+        pit_paths = self.get_image_paths("pituitary")
 
-        sel_gli_ids = random.sample(gli_ids, images_per_tumor_type)
-        sel_men_ids = random.sample(men_ids, images_per_tumor_type)
-        sel_pit_ids = random.sample(pit_ids, images_per_tumor_type)
+        sel_gli_paths = random.sample(gli_paths, images_per_tumor_type)
+        sel_men_paths = random.sample(men_paths, images_per_tumor_type)
+        sel_pit_paths = random.sample(pit_paths, images_per_tumor_type)
 
-        xdata = np.array(sel_gli_ids + sel_men_ids + sel_pit_ids)
+        xdata = np.array(sel_gli_paths + sel_men_paths + sel_pit_paths)
         ydata = np.array([con.LABELS["gli"]] * images_per_tumor_type + [con.LABELS["men"]] * images_per_tumor_type +
                          [con.LABELS["pit"]] * images_per_tumor_type)
 

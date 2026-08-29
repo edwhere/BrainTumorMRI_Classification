@@ -1,8 +1,8 @@
 """Convert the downloaded dataset into a collection of folders with each folder
 containing class images.
 
-The downloaded dataset is a collection of four folders each containing 756 data samples.
-Each data sample is stored as a matlab file that can be opened using the h5py library.
+The downloaded dataset is a collection of four folders, each containing 756 data samples.
+Each data sample is stored as a Matlab file that can be opened using the h5py library.
 
 The data in a h5py file is organized in groups. In the case of the MRI brain tumor dataset,
 there is a single group called 'cjdata'.

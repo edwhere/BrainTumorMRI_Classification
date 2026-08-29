@@ -13,4 +13,12 @@ MAX_IMAGES_PER_TUMOR_TYPE = 704
 LABELS = {"gli": 1, "men": 2, "pit": 3}
 INV_LABELS = {1: "glioma", 2: "meningioma", 3: "pituitary"}
 
+MODEL_SIZES = ["tiny", "small", "base"]
+MODEL_VERSIONS = ["v1", "v2"]
+
 RANDOM_SEED = 42
+KEYWORD = "swin"
+RESULTS_FILE_NAME = "learn_curves.csv"
+EPOCHS = 10
+LRATE = 0.0001
+BATCH = 16

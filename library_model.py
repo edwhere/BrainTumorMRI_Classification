@@ -2,9 +2,7 @@ import torchvision.models as models
 import torch.nn as nn
 from torchvision.models import SwinTransformer
 
-MODEL_SIZES = ["tiny", "small", "base"]
-MODEL_VERSIONS = ["v1", "v2"]
-
+import constants as con
 
 def swin_classifier(size: str, version: str, num_classes: int) -> SwinTransformer:
     """
@@ -34,10 +32,10 @@ def swin_classifier(size: str, version: str, num_classes: int) -> SwinTransforme
 
     # Validate function inputs
     if version not in model_mapping:
-        raise ValueError(f"Invalid model version: {version}. Choose version from {MODEL_VERSIONS}.")
+        raise ValueError(f"Invalid model version: {version}. Choose version from {con.MODEL_VERSIONS}.")
 
     if size not in model_mapping[version]:
-        raise ValueError(f"Invalid model size. Choose size from {MODEL_SIZES}.")
+        raise ValueError(f"Invalid model size. Choose size from {con.MODEL_SIZES}.")
 
     # Get a reference to the model and its weights
     model_instance, model_weights = model_mapping[version][size]
