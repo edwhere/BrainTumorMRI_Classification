@@ -77,9 +77,10 @@ def parse_arguments():
 
 class RunData:
     def __init__(self):
-        self.__id = datetime.now().strftime("Y%YM%mD%dh%Hm%Ms%S")
         self.__host = socket.gethostname()
-        self.__start_time = time()
+        self.__start_time = int(time())
+        hex_str = hex(self.__start_time)[2:]
+        self.__id = hex_str  # A timestamp encoded as hex values
 
     @property
     def id(self):
