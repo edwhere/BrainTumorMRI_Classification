@@ -5,6 +5,7 @@ import json
 import argparse
 import numpy as np
 import pandas as pd
+import statistics
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
@@ -330,7 +331,13 @@ def main():
 
     print("\nBest accuracies:")
     for pair in results.get_fold_best_val_acc_scores():
-        print(f"fold {pair[0]}: {pair[1]}")
+        print(f"   fold {pair[0]}: {pair[1]}")
+
+    print("\nMean accuracy across folds:", round(statistics.mean(best_val_acc_scores), 2))
+    print("Standard deviation across folds:", round(statistics.stdev(best_val_acc_scores), 2))
+    print("Median accuracy across folds:", round(statistics.median(best_val_acc_scores), 2))
+    print("Max accuracy across folds:", round(max(best_val_acc_scores), 2))
+    print("Min accuracy across folds:", round(min(best_val_acc_scores), 2))
 
     plt.show()
 
