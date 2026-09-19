@@ -1,4 +1,4 @@
-## Classification of MRI brain-tumor images using a SWIN transformer model
+# Classification of MRI brain-tumor images using a SWIN transformer model
 This repository implements training and 5-fold cross-validation procedures for a SWIN transformer 
 that learns to classify MRI brain tumor images in 3 categories: meningioma, glioma, and pituitary 
 tumors. 
@@ -15,7 +15,7 @@ https://figshare.com/articles/dataset/brain_tumor_dataset/1512427
 Figure 1: Examples of brain tumor MRI images from the dataset showing glioma (top), meningioma (middle) 
 and pituitary (bottom) tumors. 
 
-### Required Python modules
+## Required Python modules
 
 - h5py
 - numpy
@@ -25,7 +25,7 @@ and pituitary (bottom) tumors.
 - torchvision
 - tqdm
 
-### Workflow
+## Workflow
 
 - Download the dataset from the location mentioned above.
 - Use `generate_data.py` to convert the downloaded dataset into a dataset 
@@ -36,11 +36,11 @@ dataset into 3 classes and evaluate performance using a 5-fold cross-validation
 procedure. 
 - Use `generate_plots.py` to visualize results.
 
-### Commands
+## Commands
 All utility commands described here accept a `-h` option to see the list of 
 arguments and their meaning. 
 
-#### Data generation
+### Data generation
 ```text
 python generate_data.py -inp INPUT_DIR_PATH -out OUTPUT_DIR_PATH
 ```
@@ -51,7 +51,7 @@ Argument values:
 `OUTPUT_DIR_PATH`: Path to a directory that will contain the data prepared for training 
 a SWIN transformer.
 
-#### SWIN transformer training
+### SWIN transformer training
 
 ```text
 python swin_train.py --data_dir_path DATA_DIR_PATH \
@@ -86,7 +86,7 @@ Flags:
 
 `--gpu`: If the flag is specified, the training procedure runs using a GPU if available.
 
-#### Result visualizations
+### Result visualizations
 
 ```text
 python generate_plots.py -res RESULTS_DIR_PATH -save FIGURE_DIR_PATH
@@ -99,7 +99,7 @@ Arguments:
 `FIGURE_DIR_PATH`: A path to a directory that will store a figure with learning curves and a boxplot of 
 per-fold accuracy values. If omitted, the figure is displayed on the screen, but not saved.
 
-#### ID decoding
+### ID decoding
 Each attempt at training a SWIN transformer receives and ID, which appears in file names 
 of logs and models. This ID uniquely identifies a particular run. The ID is a timestamp 
 encoded as HEX digits. Use the following command to decode the ID:
@@ -113,7 +113,7 @@ Argument values:
 `ID_VALUE`: The ID string that appears in file names of result logs and models after completion of 
 a training procedure.
 
-### Results
+## Results
 
 We trained a Swin Transformer model using brain MRI images collected by J. Chen 
 et al. [1, 2]. The dataset contains images from three brain tumor classes: 
@@ -142,9 +142,7 @@ among the three brain tumor categories.
 Figure 2: Learning curves for training accuracy (left) and validation accuracy (middle) obtained from 
 15 epochs. The figure also shows a boxplot with the distribution of best accuracy values per fold (right).
 
-
-
-### References
+## References
 
 [1] Jun Chen et al., "Retrieval of Brain Tumors by Adaptive Spatial Pooling and Fisher Vector Representation", 
 PLOS One, June 6, 2016. Available at: 
@@ -153,3 +151,23 @@ https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0157112
 [2] Brain Tumor Retrieval GitHub page at 
 https://github.com/chengjun583/brainTumorRetrieval
 
+## License
+This project is licensed under the MIT License (Expat version)
+
+Copyright (c) 2026 Edwin Heredia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
+and associated documentation files (the "Software"), to deal in the Software without restriction, 
+including without limitation the rights to use, copy, modify, merge, publish, distribute, 
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software 
+is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or 
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
